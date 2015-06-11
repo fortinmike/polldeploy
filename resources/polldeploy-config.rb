@@ -1,8 +1,7 @@
 teamcity = PollDeploy::TeamCitySource.new("http://teamcity.mydomain.com", "username", "password")
 
-deploy :source => teamcity do |artifact|
-  path = artifact.path
+deploy_from teamcity, { :project => "MyProject", :branch => "master" } do |artifact|
   File.open(File.expand_path("~/deployments.txt", 'a')) do |file|
-    file.puts("Deploying artifact #{path}")
+    file.puts("Deploying artifact #{artifact.path}")
   end
 end

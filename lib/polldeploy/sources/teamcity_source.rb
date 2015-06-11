@@ -7,5 +7,9 @@ module PollDeploy
       @username = username
       @password = password
     end
+
+    def to_s
+      "TeamCity ('#{@endpoint}' : '#{@username}' / '#{@password}')"
+    end
   end
 end

@@ -9,7 +9,8 @@ module PollDeploy
     self.summary = "Print information about the current deployment configuration."
 
     def run
-      puts Deployments.rebuild(PollDeploy::CONFIG_FILE_PATH)
+      Console.log_step("The following deployments are configured:")
+      Deployments.build(PollDeploy::CONFIG_FILE_PATH).each { |d| Console.log_info(d.to_s) }
     end
   end
 end
