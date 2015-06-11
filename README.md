@@ -1,6 +1,6 @@
 # polldeploy
 
-Polls services for resources, then downloads and deploys them on the local machine
+Polls services for artifacts, then downloads and deploys them on the local machine
 
 ## Installation
 
