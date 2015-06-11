@@ -1,9 +1,13 @@
 module PollDeploy
   class Deployment
-    def initialize(source, options, operation)
+    attr_accessor :source
+    attr_accessor :options
+    attr_accessor :deploy
+
+    def initialize(source, options, deploy)
       @source = source
       @options = options
-      @operation = operation
+      @deploy = deploy
     end
 
     def to_s
