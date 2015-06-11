@@ -1,0 +1,5 @@
+require "claide"
+
+require "polldeploy/commands/commands"
+
+PollDeploy::Command.run(ARGV)

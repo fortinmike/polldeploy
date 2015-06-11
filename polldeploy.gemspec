@@ -1,7 +1,7 @@
 # coding: utf-8
-lib = File.expand_path('../lib', __FILE__)
+lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'polldeploy/info'
+require "polldeploy/info"
 
 Gem::Specification.new do |spec|
   spec.name          = "polldeploy"
@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Michaël Fortin"]
   spec.email         = ["michael@simbioz.com"]
 
-  spec.summary       = "Poll services for resources, then download and deploy them on the local machine"
+  spec.summary       = PollDeploy::DESCRIPTION
   spec.homepage      = "https://github.com/fortinmike/polldeploy"
   spec.license       = "MIT"
 
@@ -20,6 +20,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler", "~> 1.10"
   spec.add_development_dependency "rake", "~> 10.0"
 
+  spec.add_runtime_dependency "claide", "~> 0.8.1"
   spec.add_runtime_dependency "win32-service", "~> 0.8.6"
   spec.add_runtime_dependency "teamcity-ruby-client", "~> 1.3.1"
 end
