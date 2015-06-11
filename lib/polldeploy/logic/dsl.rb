@@ -9,7 +9,7 @@ module PollDeploy
     end
 
     def source(id, source_class, &build)
-      source = source_class.new
+      source = source_class.new(id)
       build.call(source)
       @sources.push(source)
     end
