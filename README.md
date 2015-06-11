@@ -1,10 +1,19 @@
 # polldeploy
 
-Polls services for artifacts, then downloads and deploys them on the local machine
+Polls services for artifacts, then downloads and deploys them on the local machine.
 
 ## Installation
 
     $ gem install polldeploy
+
+## Supported Platforms and Services
+
+polldeploy has limited platform and services support at the moment:
+
+- Windows (Tested on Windows 7+)
+- TeamCity (Tested with TeamCity 9.X)
+
+However, its architecture facilitates the creation of new sources and the only thing that currently makes it platform-specific is the win32-service gem, which registers a Windows service that performs sources polling.
 
 ## Development
 
