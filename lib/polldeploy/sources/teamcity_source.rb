@@ -2,11 +2,9 @@ require "teamcity"
 
 module PollDeploy
   class TeamCitySource
-    def initialize(endpoint, username, password)
-      @endpoint = endpoint
-      @username = username
-      @password = password
-    end
+    attr_accessor :endpoint
+    attr_accessor :username
+    attr_accessor :password
 
     def to_s
       "TeamCity ('#{@endpoint}' : '#{@username}' / '#{@password}')"

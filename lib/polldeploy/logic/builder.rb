@@ -1,5 +1,5 @@
-require "polldeploy/logic/deployment"
 require "polldeploy/sources/sources"
+require "polldeploy/logic/dsl"
 
 module PollDeploy
   class Builder
@@ -8,7 +8,7 @@ module PollDeploy
       
       dsl = Dsl.new
       dsl.instance_eval(config_source_code)
-
+      
       return dsl.config
     end
   end

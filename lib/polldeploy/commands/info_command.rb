@@ -1,7 +1,7 @@
 require "polldeploy/info"
 require "polldeploy/commands/command"
 require "polldeploy/utility/console"
-require "polldeploy/logic/deployments"
+require "polldeploy/logic/builder"
 
 module PollDeploy
   class InfoCommand < Command
@@ -10,7 +10,8 @@ module PollDeploy
 
     def run
       Console.log_step("The following deployments are configured:")
-      Deployments.build(PollDeploy::CONFIG_FILE_PATH).each { |d| Console.log_info(d.to_s) }
+      config = Builder.build(PollDeploy::CONFIG_FILE_PATH)
+      puts config.inspect
     end
   end
 end

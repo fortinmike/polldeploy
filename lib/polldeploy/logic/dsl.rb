@@ -1,11 +1,26 @@
-require "polldeploy/logic/deployments"
+require "polldeploy/model/deployment"
+require "polldeploy/model/config"
 
-def source(id, &build)
-  source = PollDeploy::Source.new(id)
-  build.call(source)
-end
+module PollDeploy
+  class Dsl
+    def initialize
+      @sources = []
+      @deployments = []
+    end
 
-def deploy_from(source, options, &deploy)
-  deployment = PollDeploy::Deployment.new(source, options, deploy)
-  PollDeploy::Deployments::DEPLOYMENTS.push(deployment)
+    def source(id, source_class, &build)
+      source = source_class.new
+      build.call(source)
+      @sources.push(source)
+    end
+
+    def deploy_from(source_id, options, &deploy)
+      deployment = PollDeploy::Deployment.new(source_id, options, deploy)
+      @deployments.push(deployment)
+    end
+
+    def config
+      Config.new(@sources, @deployments)
+    end
+  end
 end

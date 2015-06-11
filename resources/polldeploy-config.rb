@@ -1,5 +1,4 @@
-source :teamcity do |s|
-  s.type = TeamCitySource
+source :teamcity, TeamCitySource do |s|
   s.endpoint = "http://teamcity.mydomain.com"
   s.username = "username"
   s.password = "password"
