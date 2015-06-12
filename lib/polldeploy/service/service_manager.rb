@@ -9,6 +9,10 @@ module PollDeploy
       Service.exists?(SERVICE_NAME)
     end
 
+    def self.service_running?
+      service_state == "running"
+    end
+    
     def self.create_service
       executable = Utils.path_in_gem("bin/daemon")
       binary_path_name = "\"#{`where ruby`.chomp}\" -C \"#{File.expand_path('~')}\" \"#{executable}\""
@@ -37,6 +41,10 @@ module PollDeploy
 
     def self.stop_service
       Service.stop(SERVICE_NAME)
+    end
+
+    def self.service_state
+      Service.status(SERVICE_NAME).current_state
     end
   end
 end

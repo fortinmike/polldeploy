@@ -1,6 +1,5 @@
 require "polldeploy/commands/command"
 require "polldeploy/utility/console"
-require "polldeploy/service/service_manager"
 
 module PollDeploy
   class UninitCommand < Command
@@ -9,27 +8,9 @@ module PollDeploy
 
     def run
       Console.log_step("Uninitializing...")
-      stop_service_step
-      delete_service_step
+      stop_service
+      delete_service
       Console.log_step("Done!")
-    end
-
-    def stop_service_step
-      begin
-        Console.log_substep("Stopping service...")
-        ServiceManager.stop_service
-      rescue SystemCallError => e
-        Console.log_error(e.message)
-      end
-    end
-
-    def delete_service_step
-      begin
-        Console.log_substep("Deleting service...")
-        ServiceManager.delete_service
-      rescue SystemCallError => e
-        Console.log_(e.message)
-      end
     end
 
     def copy_config_template_to_user_home

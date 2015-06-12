@@ -3,7 +3,6 @@ require "fileutils"
 require "polldeploy/commands/command"
 require "polldeploy/utility/utils"
 require "polldeploy/utility/console"
-require "polldeploy/service/service_manager"
 
 module PollDeploy
   class InitCommand < Command
@@ -30,36 +29,13 @@ module PollDeploy
       end
 
       Console.log_substep("Creating and starting service...")
-      stop_service_step
-      delete_service_step
-      create_service_step
-      start_service_step
+      stop_service
+      delete_service
+      create_service
+      start_service
 
       Console.log_step("Initialized polldeploy!")
       Console.log_info("Edit '#{PollDeploy::CONFIG_FILE_PATH}' to configure automatic deployments")
-    end
-
-    def stop_service_step
-      begin
-        ServiceManager.stop_service
-      rescue SystemCallError
-      end
-    end
-
-    def delete_service_step
-      ServiceManager.delete_service if ServiceManager.service_exists?
-    end
-
-    def create_service_step
-      ServiceManager.create_service unless ServiceManager.service_exists?
-    end
-
-    def start_service_step
-      begin
-        ServiceManager.start_service
-      rescue SystemCallError => e
-        Console.log_warning(e.message)
-      end
     end
 
     def copy_config_template_to_user_home
