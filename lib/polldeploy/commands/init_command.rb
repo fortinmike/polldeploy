@@ -3,6 +3,7 @@ require "fileutils"
 require "polldeploy/commands/command"
 require "polldeploy/utility/utils"
 require "polldeploy/utility/console"
+require "polldeploy/service/service_manager"
 
 module PollDeploy
   class InitCommand < Command
@@ -13,12 +14,12 @@ module PollDeploy
       Console.log_step("Initializing...")
 
       if File.exist?(PollDeploy::CONFIG_FILE_PATH)
-        Console.log_warning("Already initialized! To reinitialize, please delete the current config file.")
+        Console.log_warning("Config file already exists! To start from scratch, delete the current config file.")
       else
         Console.log_substep("Copying config template to user home directory")
         copy_config_template_to_user_home
       end
-      
+
       Console.log_substep("Creating and starting service...")
       ServiceManager.create_service unless ServiceManager.service_exists?
       ServiceManager.start_service

@@ -9,8 +9,16 @@ module PollDeploy
 
     def run
       Console.log_step("Stopping the polldeploy service...")
-      ServiceManager.stop_service
+      stop_service_step
       Console.log_step("Done!")
+    end
+
+    def stop_service_step
+      begin
+        ServiceManager.stop_service
+      rescue SystemCallError => e
+        Console.log_error(e.message)
+      end
     end
   end
 end

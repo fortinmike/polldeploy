@@ -10,7 +10,7 @@ module PollDeploy
     end
 
     def self.create_service
-      executable = Utils.path_in_gem("bin/service")
+      executable = Utils.path_in_gem("bin/daemon")
       binary_path_name = "\"#{`where ruby`.chomp}\" \"#{executable}\""
 
       Service.create({
@@ -25,6 +25,10 @@ module PollDeploy
         dependencies: nil,
         display_name: 'polldeploy'
       })
+    end
+
+    def self.delete_service
+      Service.delete(SERVICE_NAME)
     end
 
     def self.start_service
