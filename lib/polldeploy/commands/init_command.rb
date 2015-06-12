@@ -21,7 +21,7 @@ module PollDeploy
     def run
       Console.log_step("Initializing...")
 
-      if !File.exist?(PollDeploy::CONFIG_FILE_PATH) || @force
+      if !File.exist?(config_file) || @force
         Console.log_substep("Copying config template to user home directory")
         copy_config_template_to_user_home
       else
@@ -35,16 +35,12 @@ module PollDeploy
       start_service
 
       Console.log_step("Initialized polldeploy!")
-      Console.log_info("Edit '#{PollDeploy::CONFIG_FILE_PATH}' to configure automatic deployments")
+      Console.log_info("Edit '#{config_file}' to configure automatic deployments")
     end
 
     def copy_config_template_to_user_home
       template_file = Utils.path_in_gem("resources/polldeploy-config.rb")
-      FileUtils.cp_r(template_file, PollDeploy::CONFIG_FILE_PATH, { :remove_destination => true })
-    end
-
-    def open_config_file
-      Utils.open_in_default_app(PollDeploy::CONFIG_FILE_PATH)
+      FileUtils.cp_r(template_file, config_file, { :remove_destination => true })
     end
   end
 end

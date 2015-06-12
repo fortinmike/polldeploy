@@ -10,6 +10,10 @@ module PollDeploy
     self.version = PollDeploy::VERSION
     self.description = PollDeploy::DESCRIPTION
 
+    def config_file
+      File.expand_path(File.join("~", PollDeploy::CONFIG_FILE))
+    end
+
     def create_service
       begin
         if ServiceManager.service_exists?

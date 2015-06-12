@@ -15,11 +15,7 @@ module PollDeploy
 
     def copy_config_template_to_user_home
       template_file = Utils.path_in_gem("resources/polldeploy-config.rb")
-      FileUtils.cp(template_file, PollDeploy::CONFIG_FILE_PATH)
-    end
-
-    def open_config_file
-      Utils.open_in_default_app(PollDeploy::CONFIG_FILE_PATH)
+      FileUtils.cp(template_file, config_file)
     end
   end
 end

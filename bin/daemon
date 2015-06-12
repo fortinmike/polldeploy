@@ -8,15 +8,16 @@ include Win32
 
 class PollDeployDaemon < Daemon
   def service_main
-    PollDeploy::ServiceLog.log_info("polldeploy service started")
+    PollDeploy::ServiceLog.log_info("Service started")
     while running?
       PollDeploy::ServiceLog.log_info("Checking for new artifacts...")
+      PollDeploy::Service.poll
       sleep PollDeploy::Config::DEFAULT_POLLING_INTERVAL
     end
   end
   
   def service_stop
-    PollDeploy::ServiceLog.log_info("polldeploy service stopped")
+    PollDeploy::ServiceLog.log_info("Service stopped")
     exit!
   end
 end
