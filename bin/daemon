@@ -6,11 +6,11 @@ include Win32
 
 class TestDaemon < Daemon
   def service_main
-      log "started"
-      while running?
-        log "running"
-        sleep 10
-      end
+    log "started"
+    while running?
+      log "running"
+      sleep 10
+    end
   end
   
   def service_stop
