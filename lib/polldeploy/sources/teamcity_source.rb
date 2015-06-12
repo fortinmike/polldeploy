@@ -13,7 +13,7 @@ module PollDeploy
     end
 
     def to_s
-      "TeamCity ('#{@endpoint}' : '#{@username}' / '#{@password}')"
+      "TeamCity '#{@endpoint}' ('#{@username}' / '#{@password}')"
     end
   end
 end
