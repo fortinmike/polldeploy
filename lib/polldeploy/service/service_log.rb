@@ -1,6 +1,6 @@
 module PollDeploy
   class ServiceLog
-    LOG_FILE = File.expand_path("~/polldeploy-log.txt")
+    LOG_FILE = "polldeploy-log.txt"
 
     def self.log_info(message)
       self.log("INFO", message)

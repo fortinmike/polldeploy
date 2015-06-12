@@ -11,7 +11,7 @@ module PollDeploy
 
     def self.create_service
       executable = Utils.path_in_gem("bin/daemon")
-      binary_path_name = "\"#{`where ruby`.chomp}\" \"#{executable}\""
+      binary_path_name = "\"#{`where ruby`.chomp}\" -C \"#{File.expand_path('~')}\" \"#{executable}\""
 
       Service.create({
         service_name: SERVICE_NAME,

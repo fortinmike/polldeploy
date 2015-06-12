@@ -11,7 +11,7 @@ class PollDeployDaemon < Daemon
     PollDeploy::ServiceLog.log_info("polldeploy service started")
     while running?
       PollDeploy::ServiceLog.log_info("Checking for new artifacts...")
-      sleep 10 #PollDeploy::Config.DEFAULT_POLLING_INTERVAL
+      sleep PollDeploy::Config::DEFAULT_POLLING_INTERVAL
     end
   end
   
