@@ -3,12 +3,36 @@ include Win32
 
 module PollDeploy
   class ServiceManager
+    SERVICE_NAME = "polldeploy"
+
+    def self.service_exists?
+      Service.exists?(SERVICE_NAME)
+    end
+
+    def self.create_service
+      executable = Utils.path_in_gem("bin/service")
+      binary_path_name = "\"#{`where ruby`.chomp}\" \"#{executable}\""
+
+      Service.create({
+        service_name: SERVICE_NAME,
+        host: nil,
+        service_type: Service::WIN32_OWN_PROCESS,
+        description: 'polldeploy source polling service',
+        start_type: Service::AUTO_START,
+        error_control: Service::ERROR_NORMAL,
+        binary_path_name: binary_path_name,
+        load_order_group: 'Network',
+        dependencies: nil,
+        display_name: 'polldeploy'
+      })
+    end
+
     def self.start_service
-      puts "TODO: Start service"
+      Service.start(SERVICE_NAME)
     end
 
     def self.stop_service
-      puts "TODO: Stop service"
+      Service.stop(SERVICE_NAME)
     end
   end
 end
