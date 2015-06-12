@@ -1,26 +1,24 @@
 #!/usr/bin/env ruby
 
-require 'rubygems'
-require 'win32/daemon'
+require "rubygems"
+require "win32/daemon"
+require "polldeploy"
+
 include Win32
 
-class TestDaemon < Daemon
+class PollDeployDaemon < Daemon
   def service_main
-    log "started"
+    PollDeploy::ServiceLog.log_info("polldeploy service started")
     while running?
-      log "running"
-      sleep 10
+      PollDeploy::ServiceLog.log_info("Checking for new artifacts...")
+      sleep 10 #PollDeploy::Config.DEFAULT_POLLING_INTERVAL
     end
   end
   
   def service_stop
-    log "ended"
+    PollDeploy::ServiceLog.log_info("polldeploy service stopped")
     exit!
-  end
-  
-  def log(text)
-    File.open("log.txt", "a") { |f| f.puts "#{Time.now}: #{text}" }
   end
 end
 
-TestDaemon.mainloop
+PollDeployDaemon.mainloop

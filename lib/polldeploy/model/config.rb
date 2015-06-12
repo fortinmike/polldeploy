@@ -1,5 +1,7 @@
 module PollDeploy
   class Config
+    DEFAULT_POLLING_INTERVAL = 5
+
     attr_accessor :sources
     attr_accessor :deployments
 
