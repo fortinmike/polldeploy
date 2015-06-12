@@ -31,6 +31,7 @@ module PollDeploy
 
       Console.log_substep("Creating and starting service...")
       stop_service_step
+      delete_service_step
       create_service_step
       start_service_step
 
@@ -43,6 +44,10 @@ module PollDeploy
         ServiceManager.stop_service
       rescue SystemCallError
       end
+    end
+
+    def delete_service_step
+      ServiceManager.delete_service if ServiceManager.service_exists?
     end
 
     def create_service_step
