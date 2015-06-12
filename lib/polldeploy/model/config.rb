@@ -13,9 +13,9 @@ module PollDeploy
     def to_s
       description = []
       description << "Sources:"
-      config.sources.each { |s| description << s.to_s } 
+      @sources.each { |s| description << s.to_s } 
       description << "Deployments:"
-      config.deployments.each { |d| description << d.to_s }
+      @deployments.each { |d| description << d.to_s }
       return description.join("\n")
     end
   end
