@@ -2,7 +2,7 @@ require "polldeploy/model/deployment"
 require "polldeploy/model/config"
 
 module PollDeploy
-  class Dsl
+  class Dsl < BasicObject
     def initialize
       @sources = []
       @deployments = []
@@ -15,7 +15,7 @@ module PollDeploy
     end
 
     def deploy_from(source_id, options, &deploy)
-      deployment = PollDeploy::Deployment.new(source_id, options, deploy)
+      deployment = Deployment.new(source_id, options, deploy)
       @deployments.push(deployment)
     end
 
