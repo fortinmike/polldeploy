@@ -4,8 +4,8 @@ source :teamcity, TeamCitySource do |s|
   s.password = "password"
 end
 
-deploy_from :teamcity, { :project => "MyProject", :branch => "master" } do |source, artifact|
+deploy_from :teamcity, { :project => "MyProject", :branch => "master" } do |d|
   File.open(File.expand_path("~/deployments.txt", 'a')) do |file|
-    file.puts("Deploying artifact #{artifact.path}")
+    file.puts("Deploying artifact #{d.artifact.path}")
   end
 end
