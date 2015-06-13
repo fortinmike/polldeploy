@@ -7,8 +7,9 @@ module PollDeploy
     def self.poll
       begin
         config = Builder.build(PollDeploy::CONFIG_FILE)
-      rescue
-        ServiceLog.log_error("Malformed config file")
+      rescue => e
+        ServiceLog.log_error("Malformed config file:")
+        e.backtrace.each { |c| ServiceLog.log_error("  #{c}") }
         return
       end
 
