@@ -40,7 +40,7 @@ module PollDeploy
 
     def copy_config_template_to_user_home
       template_file = Utils.path_in_gem("resources/polldeploy-config.rb")
-      FileUtils.cp_r(template_file, config_file, { :remove_destination => true })
+      FileUtils.cp_r(template_file, config_file, :remove_destination => true)
     end
   end
 end

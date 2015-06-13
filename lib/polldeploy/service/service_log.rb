@@ -4,15 +4,15 @@ module PollDeploy
     CRITICAL_LOG_FILE = "polldeploy-error.txt"
 
     def self.log_info(message)
-      self.log("INFO", message)
+      log("INFO", message)
     end
 
     def self.log_warning(message)
-      self.log("WARNING", message)
+      log("WARNING", message)
     end
 
     def self.log_error(message)
-      self.log("ERROR", message)
+      log("ERROR", message)
     end
 
     def self.log_critical_error(message)
