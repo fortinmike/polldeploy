@@ -5,9 +5,14 @@ require "polldeploy/service/service_log"
 module PollDeploy
   class Core
     def self.poll
-      config = Builder.build(PollDeploy::CONFIG_FILE)
-      ServiceLog.log_info("Performing #{config.deployments.count} deployment(s) from #{config.sources.count} source(s)")
+      begin
+        config = Builder.build(PollDeploy::CONFIG_FILE)
+      rescue
+        ServiceLog.log_error("Malformed config file")
+        return
+      end
 
+      ServiceLog.log_info("Performing #{config.deployments.count} deployment(s) from #{config.sources.count} source(s)")
       perform_deployments(config)
     end
 
