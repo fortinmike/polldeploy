@@ -1,4 +1,3 @@
-require "polldeploy/info"
 require "polldeploy/commands/command"
 require "polldeploy/utility/console"
 require "polldeploy/logic/builder"

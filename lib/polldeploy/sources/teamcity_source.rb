@@ -1,4 +1,5 @@
 require "teamcity"
+require "polldeploy/service/service_log"
 
 module PollDeploy
   class TeamCitySource
@@ -10,6 +11,22 @@ module PollDeploy
 
     def initialize(id)
       @id = id
+    end
+
+    def fetch(options)
+      configure_teamcity_client
+      projects = TeamCity.projects
+      return projects
+    rescue Exception => e
+      ServiceLog.log_error("Could not fetch source '#{@id}':\n#{e.message}")
+    end
+
+    def configure_teamcity_client
+      TeamCity.configure do |config|
+        config.endpoint = @endpoint
+        config.http_user = @username
+        config.http_password = @password
+      end
     end
 
     def to_s

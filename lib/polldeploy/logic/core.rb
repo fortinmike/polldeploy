@@ -13,13 +13,13 @@ module PollDeploy
         return
       end
 
-      ServiceLog.log_info("Performing #{config.deployments.count} deployment(s) from #{config.sources.count} source(s)")
       perform_deployments(config)
     end
 
     def self.perform_deployments(config)
+      ServiceLog.log_info("Performing #{config.deployments.count} deployment(s) from #{config.sources.count} source(s)")
       config.deployments.each do |deployment|
-        ServiceLog.log_info("Performing deployment #{deployment.name}")
+        ServiceLog.log_info("Performing deployment '#{deployment.name}'")
         source = config.sources.find { |s| s.id == deployment.source_id }
         unless source
           ServiceLog.log_error("No source named '#{deployment.source_id}' exists")
@@ -31,6 +31,8 @@ module PollDeploy
     end
 
     def self.perform_deployment(source, deployment)
+      results = source.fetch(deployment.options)
+      ServiceLog.log_info(results)
     end
   end
 end
