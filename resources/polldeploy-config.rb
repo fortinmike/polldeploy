@@ -1,5 +1,5 @@
 source :teamcity, TeamCitySource do |s|
-  s.endpoint = "http://teamcity.mydomain.com"
+  s.url = "http://teamcity.mydomain.com"
   s.username = "username"
   s.password = "password"
 end

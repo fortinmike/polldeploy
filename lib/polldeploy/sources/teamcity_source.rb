@@ -1,3 +1,4 @@
+require "uri"
 require "teamcity"
 require "polldeploy/service/service_log"
 
@@ -5,7 +6,7 @@ module PollDeploy
   class TeamCitySource
     attr_accessor :id
     
-    attr_accessor :endpoint
+    attr_accessor :url
     attr_accessor :username
     attr_accessor :password
 
@@ -23,14 +24,14 @@ module PollDeploy
 
     def configure_teamcity_client
       TeamCity.configure do |config|
-        config.endpoint = @endpoint
+        config.endpoint = URI.join(@url, "httpAuth/app/rest")
         config.http_user = @username
         config.http_password = @password
       end
     end
 
     def to_s
-      "TeamCity '#{@endpoint}' ('#{@username}' / '#{@password}')"
+      "TeamCity '#{@url}' ('#{@username}' / '#{@password}')"
     end
   end
 end
