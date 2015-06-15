@@ -17,7 +17,8 @@ module PollDeploy
     def fetch(options)
       configure_teamcity_client
       projects = TeamCity.projects
-      return projects
+      project = projects.find { |p| p.id == options[:project_id] }
+      return project
     rescue Exception => e
       ServiceLog.log_error("Could not fetch source '#{@id}':\n#{e.message}")
     end
