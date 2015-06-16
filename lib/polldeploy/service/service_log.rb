@@ -1,3 +1,5 @@
+require "polldeploy/utility/console"
+
 module PollDeploy
   class ServiceLog
     LOG_FILE = "polldeploy-log.txt"
@@ -16,11 +18,15 @@ module PollDeploy
     end
 
     def self.log_critical_error(message)
-      File.open(CRITICAL_LOG_FILE, "a") { |f| f.puts "#{now}: #{message}" }
+      prefixed_message = "#{now}: #{message}"
+      Console.log_info(prefixed_message)
+      File.open(CRITICAL_LOG_FILE, "a") { |f| f.puts prefixed_message }
     end
 
     def self.log(level_name, message)
-      File.open(LOG_FILE, "a") { |f| f.puts "#{now}: [#{level_name}] #{message}" }
+      prefixed_message = "#{now}: [#{level_name}] #{message}"
+      Console.log_info(prefixed_message)
+      File.open(LOG_FILE, "a") { |f| f.puts prefixed_message }
     end
 
     def self.now
