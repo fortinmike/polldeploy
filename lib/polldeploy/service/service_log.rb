@@ -16,11 +16,15 @@ module PollDeploy
     end
 
     def self.log_critical_error(message)
-      File.open(CRITICAL_LOG_FILE, "a") { |f| f.puts "#{Time.now}: #{message}" }
+      File.open(CRITICAL_LOG_FILE, "a") { |f| f.puts "#{now}: #{message}" }
     end
 
     def self.log(level_name, message)
-      File.open(LOG_FILE, "a") { |f| f.puts "#{Time.now}: [#{level_name}] #{message}" }
+      File.open(LOG_FILE, "a") { |f| f.puts "#{now}: [#{level_name}] #{message}" }
+    end
+
+    def self.now
+      Time.now.strftime('%a, %d %b %Y %H:%M:%S')
     end
   end
 end
