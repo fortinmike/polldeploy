@@ -26,10 +26,7 @@ module PollDeploy
       latest_build = TeamCity.builds(options).first
       raise "No build found for build locator #{options}" unless latest_build.first
 
-      ServiceLog.log_info(latest_build.inspect)
-
       artifacts = TeamCity.build_artifacts(latest_build.id)
-      ServiceLog.log_info(artifacts.inspect)
 
       return artifacts
     rescue Exception => e
@@ -37,8 +34,9 @@ module PollDeploy
     end
 
     def configure_teamcity_client
+      TeamCity.reset
       TeamCity.configure do |config|
-        config.endpoint = URI.join(@url, "httpAuth/app/rest")
+        config.endpoint = URI.join(@url, "httpAuth/app/rest/8.0")
         config.http_user = @username
         config.http_password = @password
       end
