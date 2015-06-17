@@ -1,6 +1,7 @@
 require "uri"
 require "teamcity"
 require "polldeploy/service/service_log"
+require "polldeploy/model/deploy/artifact"
 
 module PollDeploy
   class TeamCitySource
@@ -20,7 +21,13 @@ module PollDeploy
       latest_build = TeamCity.builds(options).first
       raise "No build found for build locator #{options}" unless latest_build.first
 
-      artifacts = TeamCity.build_artifacts(latest_build.id)
+      teamcity_artifacts = TeamCity.build_artifacts(latest_build.id)
+      artifacts = teamcity_artifacts.map do |a|
+         artifact = Artifact.new
+         artifact.name = a.name
+         artifact.url = a["content"].href
+         artifact
+      end
 
       return artifacts
     rescue Exception => e

@@ -33,7 +33,7 @@ module PollDeploy
     def self.perform_deployment(config_source, config_deployment)
       source = config_source.type.new(config_source)
       results = source.fetch(config_deployment.options)
-      results.map { |a| ServiceLog.log_info(a.href) }
+      ServiceLog.log_info(results.inspect)
     end
   end
 end

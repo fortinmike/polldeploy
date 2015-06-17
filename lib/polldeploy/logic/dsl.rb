@@ -1,6 +1,6 @@
-require "polldeploy/model/config_deployment"
-require "polldeploy/model/config_source"
-require "polldeploy/model/config"
+require "polldeploy/model/config/config_deployment"
+require "polldeploy/model/config/config_source"
+require "polldeploy/model/config/config"
 require "polldeploy/sources/sources"
 require "polldeploy/service/service_log"
 
