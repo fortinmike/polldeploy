@@ -1,4 +1,5 @@
-require "polldeploy/model/deployment"
+require "polldeploy/model/config_deployment"
+require "polldeploy/model/config_source"
 require "polldeploy/model/config"
 require "polldeploy/sources/sources"
 require "polldeploy/service/service_log"
@@ -12,14 +13,20 @@ module PollDeploy
 
     # DSL
 
-    def source(id, source_class, &build)
-      source = source_class.new(id)
+    def source(id, type, &build)
+      source = ConfigSource.new
+      source.id = id
+      source.type = type
       build.call(source)
       @sources.push(source)
     end
 
     def deploy(name, source_id, options, &deploy)
-      deployment = Deployment.new(name, source_id, options, deploy)
+      deployment = ConfigDeployment.new
+      deployment.name = name
+      deployment.source_id = source_id
+      deployment.options = options
+      deployment.deploy = deploy
       @deployments.push(deployment)
     end
 

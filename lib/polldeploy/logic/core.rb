@@ -18,21 +18,22 @@ module PollDeploy
 
     def self.perform_deployments(config)
       ServiceLog.log_info("Performing #{config.deployments.count} deployment(s) from #{config.sources.count} source(s)")
-      config.deployments.each do |deployment|
-        ServiceLog.log_info("Performing deployment '#{deployment.name}'")
-        source = config.sources.find { |s| s.id == deployment.source_id }
-        unless source
-          ServiceLog.log_error("No source named '#{deployment.source_id}' exists")
+      config.deployments.each do |config_deployment|
+        ServiceLog.log_info("Performing deployment '#{config_deployment.name}'")
+        config_source = config.sources.find { |s| s.id == config_deployment.source_id }
+        unless config_source
+          ServiceLog.log_error("No source named '#{config_deployment.source_id}' exists")
           ServiceLog.log_error("Deployment aborted")
           next
         end
-        perform_deployment(source, deployment)
+        perform_deployment(config_source, config_deployment)
       end
     end
 
-    def self.perform_deployment(source, deployment)
-      results = source.fetch(deployment.options)
-      ServiceLog.log_info(results)
+    def self.perform_deployment(config_source, config_deployment)
+      source = config_source.type.new(config_source)
+      results = source.fetch(config_deployment.options)
+      results.map { |a| ServiceLog.log_info(a.href) }
     end
   end
 end
