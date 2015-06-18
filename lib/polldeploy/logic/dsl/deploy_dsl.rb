@@ -3,17 +3,18 @@ require "polldeploy/model/deploy/deployment"
 
 module PollDeploy
   class DeployDsl < BasicObject
+    attr_accessor :deployment
+
     def initialize(deployment)
       @deployment = deployment
     end
 
     def download(artifact)
-      #log "#{a}"
       #return @deployment.source.download(artifact)
     end
 
     def log(message)
-      #ServiceLog.log_info(message)
+      ServiceLog.log_info(message)
     end
   end
 end

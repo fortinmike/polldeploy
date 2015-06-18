@@ -11,6 +11,7 @@ module PollDeploy
         config = Builder.build(PollDeploy::CONFIG_FILE)
       rescue => e
         ServiceLog.log_error("Malformed config file:")
+        ServiceLog.log_error(e.message)
         e.backtrace.each { |c| ServiceLog.log_error("  #{c}") }
         return
       end
@@ -19,6 +20,7 @@ module PollDeploy
         perform_deployments(config)
       rescue => e
         ServiceLog.log_error("Error performing deployments:")
+        ServiceLog.log_error(e.message)
         e.backtrace.each { |c| ServiceLog.log_error("  #{c}") }
       end
     end
@@ -42,9 +44,8 @@ module PollDeploy
       artifacts = source.fetch(config_deployment.options)
       deployment = Deployment.new(config_deployment.name, source, artifacts)
 
-      #deploy_dsl = DeployDsl.new(deployment)
-      #ServiceLog.log_info("#{deploy_dsl.inspect}")
-      #deploy_dsl.instance_exec(deployment, &config_deployment.deploy)
+      deploy_dsl = DeployDsl.new(deployment)
+      deploy_dsl.instance_exec(deployment, &config_deployment.deploy)
     end
   end
 end
