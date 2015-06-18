@@ -40,9 +40,10 @@ module PollDeploy
     def self.perform_deployment(config_source, config_deployment)
       source = config_source.type.new(config_source)
       artifacts = source.fetch(config_deployment.options)
-      #deployment = Deployment.new(config_deployment.name, source, artifacts)
+      deployment = Deployment.new(config_deployment.name, source, artifacts)
 
       #deploy_dsl = DeployDsl.new(deployment)
+      #ServiceLog.log_info("#{deploy_dsl.inspect}")
       #deploy_dsl.instance_exec(deployment, &config_deployment.deploy)
     end
   end

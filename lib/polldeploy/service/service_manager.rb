@@ -21,13 +21,13 @@ module PollDeploy
         service_name: SERVICE_NAME,
         host: nil,
         service_type: Service::WIN32_OWN_PROCESS,
-        description: 'polldeploy source polling service',
+        description: "polldeploy",
         start_type: Service::AUTO_START,
         error_control: Service::ERROR_NORMAL,
         binary_path_name: binary_path_name,
-        load_order_group: 'Network',
+        load_order_group: "Network",
         dependencies: nil,
-        display_name: 'polldeploy'
+        display_name: "polldeploy"
       })
     end
 
