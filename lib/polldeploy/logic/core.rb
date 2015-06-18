@@ -2,6 +2,7 @@ require "polldeploy/info"
 require "polldeploy/service/service_log"
 require "polldeploy/logic/builder"
 require "polldeploy/model/deploy/deployment"
+require "polldeploy/logic/dsl/deploy_dsl"
 
 module PollDeploy
   class Core
@@ -39,8 +40,10 @@ module PollDeploy
     def self.perform_deployment(config_source, config_deployment)
       source = config_source.type.new(config_source)
       artifacts = source.fetch(config_deployment.options)
-      deployment = Deployment.new(config_deployment.name, artifacts)
-      config_deployment.deploy.call(deployment)
+      #deployment = Deployment.new(config_deployment.name, source, artifacts)
+
+      #deploy_dsl = DeployDsl.new(deployment)
+      #deploy_dsl.instance_exec(deployment, &config_deployment.deploy)
     end
   end
 end

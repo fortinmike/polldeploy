@@ -2,10 +2,9 @@ require "polldeploy/model/config/config_deployment"
 require "polldeploy/model/config/config_source"
 require "polldeploy/model/config/config"
 require "polldeploy/sources/sources"
-require "polldeploy/service/service_log"
 
 module PollDeploy
-  class Dsl < BasicObject
+  class ConfigDsl < BasicObject
     def initialize
       @sources = []
       @deployments = []
@@ -29,11 +28,7 @@ module PollDeploy
       deployment.deploy = deploy
       @deployments.push(deployment)
     end
-
-    def log(message)
-      ServiceLog.log_info(message)
-    end
-
+    
     # Obtain DSl usage results
 
     def config
