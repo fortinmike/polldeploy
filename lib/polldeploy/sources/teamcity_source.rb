@@ -21,13 +21,8 @@ module PollDeploy
       latest_build = TeamCity.builds(options).first
       raise "No build found for build locator #{options}" unless latest_build.first
 
-      teamcity_artifacts = TeamCity.build_artifacts(latest_build.id)
-      artifacts = teamcity_artifacts.map do |a|
-         artifact = Artifact.new
-         artifact.name = a.name
-         artifact.url = a["content"].href
-         artifact
-      end
+      teamcity_artifacts = TeamCity.build_artifacts(latest_build.id) || []
+      artifacts = teamcity_artifacts.map { |a| Artifact.new(a.name, a["content"].href) }
 
       return artifacts
     rescue Exception => e

@@ -1,6 +1,7 @@
 require "polldeploy/info"
-require "polldeploy/logic/builder"
 require "polldeploy/service/service_log"
+require "polldeploy/logic/builder"
+require "polldeploy/model/deploy/deployment"
 
 module PollDeploy
   class Core
@@ -13,7 +14,12 @@ module PollDeploy
         return
       end
 
-      perform_deployments(config)
+      begin
+        perform_deployments(config)
+      rescue => e
+        ServiceLog.log_error("Error performing deployments:")
+        e.backtrace.each { |c| ServiceLog.log_error("  #{c}") }
+      end
     end
 
     def self.perform_deployments(config)
@@ -32,8 +38,9 @@ module PollDeploy
 
     def self.perform_deployment(config_source, config_deployment)
       source = config_source.type.new(config_source)
-      results = source.fetch(config_deployment.options)
-      ServiceLog.log_info(results.inspect)
+      artifacts = source.fetch(config_deployment.options)
+      deployment = Deployment.new(config_deployment.name, artifacts)
+      config_deployment.deploy.call(deployment)
     end
   end
 end
