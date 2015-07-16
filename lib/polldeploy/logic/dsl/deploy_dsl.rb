@@ -1,3 +1,5 @@
+require "securerandom"
+
 require "polldeploy/service/service_log"
 require "polldeploy/model/deploy/deployment"
 
@@ -10,7 +12,7 @@ module PollDeploy
     end
 
     def download(artifact)
-      #return @deployment.source.download(artifact)
+      return @deployment.source.download(artifact)
     end
 
     def log(message)

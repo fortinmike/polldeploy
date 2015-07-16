@@ -41,7 +41,7 @@ module PollDeploy
 
     def self.perform_deployment(config_source, config_deployment)
       source = config_source.type.new(config_source)
-      artifacts = source.fetch(config_deployment.options)
+      artifacts = source.fetch_artifacts(config_deployment.options)
       deployment = Deployment.new(config_deployment.name, source, artifacts)
 
       deploy_dsl = DeployDsl.new(deployment)

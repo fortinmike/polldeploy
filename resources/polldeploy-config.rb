@@ -5,5 +5,9 @@ source :teamcity, TeamCitySource do |s|
 end
 
 deploy "MyProject", :teamcity, { :project => "MyProject", :branch => "master" } do |d|
-  d.artifacts.each { |a| log "Deploying artifact #{a}" }
+  d.artifacts.each do |artifact|
+    log "Deploying artifact #{artifact}"
+    file = download artifact
+    log "Downloaded file is here: #{file}"
+  end
 end

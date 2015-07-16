@@ -1,5 +1,6 @@
 require "uri"
 require "teamcity"
+require "polldeploy/polldeploy_exception"
 require "polldeploy/service/service_log"
 require "polldeploy/model/deploy/artifact"
 
@@ -9,7 +10,16 @@ module PollDeploy
       @config_source = config_source
     end
 
-    def fetch(options)
+    def configure_teamcity_client
+      TeamCity.reset
+      TeamCity.configure do |config|
+        config.endpoint = URI.join(@config_source.url, "httpAuth/app/rest/8.0")
+        config.http_user = @config_source.username
+        config.http_password = @config_source.password
+      end
+    end
+
+    def fetch_artifacts(options)
       configure_teamcity_client
 
       # Further restrict fetch results
@@ -26,16 +36,12 @@ module PollDeploy
 
       return artifacts
     rescue Exception => e
-      ServiceLog.log_error("Could not fetch source '#{@config_source.id}':\n#{e.message}")
+      raise PollDeployException, "Could not fetch artifacts from source '#{@config_source.id}':\n#{e.message}"
     end
 
-    def configure_teamcity_client
-      TeamCity.reset
-      TeamCity.configure do |config|
-        config.endpoint = URI.join(@config_source.url, "httpAuth/app/rest/8.0")
-        config.http_user = @config_source.username
-        config.http_password = @config_source.password
-      end
+    def download(artifact)
+      ServiceLog.log_info("Downloading artifact #{artifact.name} to local file #{artifact.file}")
+      return artifact.file
     end
   end
 end
